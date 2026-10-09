@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f766e">
+
+
+<title>M-Pocket | Digital Wallet</title>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="style.css">
+
+
+</head>
+
+<body>
+
+<div class="app-container">
+
+<!-- HEADER -->
+<header class="topbar">
+    <a href="#" class="logo" aria-label="M-Pocket home">
+        <span class="logo-icon">M</span>
+        <span>M-Pocket</span>
+    </a>
+
+    <div class="header-actions">
+
+        <button id="profileBtn" class="icon-button" type="button"
+            aria-label="Open profile" title="Profile">
+            <i class="bi bi-person-circle" aria-hidden="true"></i>
+            <span class="button-label">Profile</span>
+        </button>
+
+        <button id="lockBtn" class="icon-button" type="button"
+            aria-label="Lock wallet" title="Lock Wallet">
+            <i class="bi bi-lock-fill" aria-hidden="true"></i>
+            <span class="button-label">Lock</span>
+        </button>
+
+        <button id="themeToggle" class="icon-button" type="button"
+            aria-label="Toggle light and dark theme" title="Toggle Theme">
+            <i class="bi bi-moon-stars-fill" aria-hidden="true"></i>
+        </button>
+
+    </div>
+</header>
+
+
+<!-- WELCOME -->
+<section class="welcome">
+    <div>
+        <p class="eyebrow">YOUR MONEY, YOUR CONTROL</p>
+        <h1>Welcome back, <span id="welcomeName">Mubeeey</span>!</h1>
+        <p class="muted">Manage your wallet in one place.</p>
+    </div>
+
+    <div class="date-badge"></div>
+</section>
+
+
+<!-- PROFILE SECTION -->
+<section id="profileSection" class="panel hidden">
+
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">ACCOUNT SETTINGS</p>
+            <h2>
+                <i class="bi bi-person-circle" aria-hidden="true"></i>
+                Your Profile
+            </h2>
+        </div>
+
+        <button id="closeProfileBtn" class="secondary-button" type="button">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+            Close
+        </button>
+    </div>
+
+    <div class="profile-summary">
+        <div class="avatar" id="profileAvatar">M</div>
+
+        <div>
+            <h3 id="profileDisplayName">Mubeeey</h3>
+            <p class="muted">M-Pocket account</p>
+        </div>
+    </div>
+
+    <form id="profileForm" class="form-grid">
+        <div class="form-group full-width">
+            <label for="profileName">Display name</label>
+            <input type="text" id="profileName" maxlength="40"
+                placeholder="Enter your name" required>
+        </div>
+
+        <div class="full-width">
+            <button class="primary-button" type="submit">
+                <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+                Save Profile
+            </button>
+        </div>
+    </form>
+
+    <div class="profile-details">
+        <div class="profile-detail-card">
+            <span>Selected Wallet</span>
+            <strong id="profileWalletId">—</strong>
+        </div>
+
+        <div class="profile-detail-card">
+            <span>Total Wallets</span>
+            <strong id="profileWalletCount">0</strong>
+        </div>
+
+        <div class="profile-detail-card">
+            <span>Total Transactions</span>
+            <strong id="profileTransactionCount">0</strong>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">ACCOUNT PROTECTION</p>
+            <h3>
+                <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
+                Change Your PIN
+            </h3>
+        </div>
+    </div>
+
+    <p class="muted small-text">
+        Use a PIN containing 4–6 digits. This PIN is only a basic
+        browser-level demo lock.
+    </p>
+
+    <form id="changePinForm" class="form-grid">
+        <div class="form-group">
+            <label for="currentPin">Current PIN</label>
+            <input type="password" id="currentPin" inputmode="numeric"
+                pattern="[0-9]*" maxlength="6"
+                autocomplete="current-password"
+                placeholder="Current PIN" required>
+        </div>
+
+        <div class="form-group">
+            <label for="newPin">New PIN</label>
+            <input type="password" id="newPin" inputmode="numeric"
+                pattern="[0-9]*" maxlength="6"
+                autocomplete="new-password"
+                placeholder="4–6 digits" required>
+        </div>
+
+        <div class="form-group full-width">
+            <label for="confirmNewPin">Confirm New PIN</label>
+            <input type="password" id="confirmNewPin"
+                inputmode="numeric" pattern="[0-9]*" maxlength="6"
+                autocomplete="new-password"
+                placeholder="Repeat new PIN" required>
+        </div>
+
+        <div class="full-width">
+            <button class="primary-button" type="submit">
+                <i class="bi bi-shield-check" aria-hidden="true"></i>
+                Update PIN
+            </button>
+
+            <p id="pinSettingsMessage" class="form-message"
+                aria-live="polite"></p>
+        </div>
+    </form>
+</section>
+
+
+<!-- BALANCE CARD -->
+<section class="balance-card">
+    <div class="balance-card-top">
+        <div>
+            <p class="balance-label">Total Balance</p>
+            <h2 id="balance">₦50,000.00</h2>
+        </div>
+
+        <button id="toggleBalance" class="icon-button" type="button"
+            aria-label="Hide balance" title="Hide Balance">
+            <i class="bi bi-eye-slash-fill" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="wallet-information">
+        <div>
+            <span class="balance-label">Selected Wallet ID</span>
+            <strong id="walletId">MP-10001</strong>
+        </div>
+
+        <span class="wallet-chip">
+            <i class="bi bi-wallet2" aria-hidden="true"></i>
+            M-POCKET
+        </span>
+    </div>
+</section>
+
+
+<!-- QUICK ACTIONS -->
+<section class="quick-actions">
+
+    <button id="sendBtn" class="action-card send-action" type="button">
+        <span class="action-icon">
+            <i class="bi bi-send-fill" aria-hidden="true"></i>
+        </span>
+        <span>Send Money</span>
+    </button>
+
+    <button id="receiveBtn" class="action-card receive-action" type="button">
+        <span class="action-icon">
+            <i class="bi bi-download" aria-hidden="true"></i>
+        </span>
+        <span>Receive Money</span>
+    </button>
+
+    <button id="createBtn" class="action-card create-action" type="button">
+        <span class="action-icon">
+            <i class="bi bi-plus-circle-fill" aria-hidden="true"></i>
+        </span>
+        <span>Create Wallet</span>
+    </button>
+
+</section>
+
+
+<!-- SEND MONEY -->
+<section id="sendSection" class="panel hidden">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">TRANSFER</p>
+            <h2>
+                <i class="bi bi-send" aria-hidden="true"></i>
+                Send Money
+            </h2>
+        </div>
+
+        <button class="secondary-button close-form" type="button">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+            Close
+        </button>
+    </div>
+
+    <form id="sendForm" class="form-grid">
+        <div class="form-group full-width">
+            <label for="recipientWallet">Recipient Wallet ID</label>
+            <input type="text" id="recipientWallet"
+                placeholder="e.g. MP-10002" required>
+        </div>
+
+        <div class="form-group full-width">
+            <label for="sendAmount">Amount (₦)</label>
+            <input type="number" id="sendAmount" min="1" step="0.01"
+                placeholder="Enter amount" required>
+        </div>
+
+        <div class="form-group full-width">
+            <label for="sendNote">Description (optional)</label>
+            <input type="text" id="sendNote" maxlength="100"
+                placeholder="What is this payment for?">
+        </div>
+
+        <div class="full-width">
+            <button class="primary-button" type="submit">
+                <i class="bi bi-send-check-fill" aria-hidden="true"></i>
+                Confirm Transfer
+            </button>
+        </div>
+    </form>
+</section>
+
+
+<!-- CREATE WALLET -->
+<section id="createSection" class="panel hidden">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">NEW ACCOUNT</p>
+            <h2>
+                <i class="bi bi-wallet2" aria-hidden="true"></i>
+                Create Wallet
+            </h2>
+        </div>
+
+        <button class="secondary-button close-form" type="button">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+            Close
+        </button>
+    </div>
+
+    <form id="createForm" class="form-grid">
+        <div class="form-group full-width">
+            <label for="walletOwner">Wallet Owner Name</label>
+            <input type="text" id="walletOwner" maxlength="40"
+                placeholder="Enter owner's name" required>
+        </div>
+
+        <div class="form-group full-width">
+            <label for="startingBalance">Starting Balance (₦)</label>
+            <input type="number" id="startingBalance" min="0" step="0.01"
+                value="0" required>
+        </div>
+
+        <div class="full-width">
+            <button class="primary-button" type="submit">
+                <i class="bi bi-plus-circle-fill" aria-hidden="true"></i>
+                Create Wallet
+            </button>
+        </div>
+    </form>
+</section>
+
+
+<!-- RECEIVE MONEY -->
+<section id="receiveSection" class="panel hidden">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">GET PAID</p>
+            <h2>
+                <i class="bi bi-wallet2" aria-hidden="true"></i>
+                Receive Money
+            </h2>
+        </div>
+
+        <button class="secondary-button close-form" type="button">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+            Close
+        </button>
+    </div>
+
+    <p class="muted">
+        Share this demo wallet ID with another wallet in this browser
+        to test transfers.
+    </p>
+
+    <div class="receive-card">
+        <span class="muted">Your Wallet ID</span>
+        <strong id="receiveId">MP-10001</strong>
+
+        <button id="copyBtn" class="primary-button" type="button">
+            <i class="bi bi-clipboard" aria-hidden="true"></i>
+            Copy Wallet ID
+        </button>
+    </div>
+</section>
+
+
+<!-- ANALYTICS -->
+<section class="analytics-section">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">YOUR ACTIVITY</p>
+            <h2>
+                <i class="bi bi-bar-chart-line-fill" aria-hidden="true"></i>
+                Wallet Analytics
+            </h2>
+        </div>
+    </div>
+
+    <div class="analytics-grid">
+
+        <article class="stat-card">
+            <span class="stat-icon sent-icon">
+                <i class="bi bi-arrow-up-right-circle-fill" aria-hidden="true"></i>
+            </span>
+            <p>Total Sent</p>
+            <h3 id="totalSent">₦0.00</h3>
+        </article>
+
+        <article class="stat-card">
+            <span class="stat-icon received-icon">
+                <i class="bi bi-arrow-down-left-circle-fill" aria-hidden="true"></i>
+            </span>
+            <p>Total Received</p>
+            <h3 id="totalReceived">₦0.00</h3>
+        </article>
+
+        <article class="stat-card">
+            <span class="stat-icon transaction-icon">
+                <i class="bi bi-arrow-left-right" aria-hidden="true"></i>
+            </span>
+            <p>Transactions</p>
+            <h3 id="totalTransactions">0</h3>
+        </article>
+
+        <article class="stat-card">
+            <span class="stat-icon wallet-icon">
+                <i class="bi bi-wallet-fill" aria-hidden="true"></i>
+            </span>
+            <p>Wallets</p>
+            <h3 id="totalWallets">0</h3>
+        </article>
+
+    </div>
+
+    <div class="panel chart-panel">
+
+        <div class="chart-row">
+            <div class="chart-label">
+                <span>
+                    <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+                    Money Sent
+                </span>
+                <strong id="sentChartValue">₦0.00</strong>
+            </div>
+
+            <div class="chart-track">
+                <div id="sentChartBar" class="chart-bar sent-bar"></div>
+            </div>
+        </div>
+
+        <div class="chart-row">
+            <div class="chart-label">
+                <span>
+                    <i class="bi bi-arrow-down-left" aria-hidden="true"></i>
+                    Money Received
+                </span>
+                <strong id="receivedChartValue">₦0.00</strong>
+            </div>
+
+            <div class="chart-track">
+                <div id="receivedChartBar" class="chart-bar received-bar"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- WALLETS -->
+<section class="panel">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">YOUR ACCOUNTS</p>
+            <h2>
+                <i class="bi bi-wallet2" aria-hidden="true"></i>
+                My Wallets
+            </h2>
+        </div>
+    </div>
+
+    <div id="walletList" class="wallet-list"></div>
+</section>
+
+
+<!-- TRANSACTIONS -->
+<section class="panel">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">RECENT ACTIVITY</p>
+            <h2>
+                <i class="bi bi-clock-history" aria-hidden="true"></i>
+                Transactions
+            </h2>
+        </div>
+    </div>
+
+    <div class="search-row">
+        <input type="search" id="transactionSearch"
+            placeholder="Search transactions..."
+            aria-label="Search transactions">
+
+        <button id="clearSearch" class="secondary-button" type="button">
+            <i class="bi bi-x-circle" aria-hidden="true"></i>
+            Clear
+        </button>
+    </div>
+
+    <p id="searchResults" class="muted small-text" aria-live="polite"></p>
+
+    <div id="transactionList" class="transaction-list"></div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>
+        <i class="bi bi-c-circle" aria-hidden="true"></i>
+        <span id="currentYear"></span> M-Pocket
+    </p>
+    <p>
+        <i class="bi bi-shield-check" aria-hidden="true"></i>
+        Personal wallet interface demo
+    </p>
+</footer>
+
+</div>
+
+<!-- SECURITY MODAL -->
+
+<div id="securityModal" class="security-modal" role="dialog"
+    aria-modal="true" aria-labelledby="securityTitle">
+
+```
+<div class="security-card">
+
+    <div class="security-logo">
+        <i class="bi bi-wallet2" aria-hidden="true"></i>
+    </div>
+
+    <p class="eyebrow">M-POCKET SECURITY</p>
+    <h2 id="securityTitle">Secure Your Wallet</h2>
+
+    <p id="securityDescription" class="muted">
+        Create a PIN to access your demo wallet.
+    </p>
+
+    <form id="securityForm">
+
+        <div class="form-group">
+            <label for="pinInput">
+                <i class="bi bi-key-fill" aria-hidden="true"></i>
+                PIN
+            </label>
+            <input type="password" id="pinInput" inputmode="numeric"
+                pattern="[0-9]*" maxlength="6" autocomplete="off"
+                placeholder="Enter 4–6 digit PIN" required>
+        </div>
+
+        <div id="confirmPinGroup" class="form-group">
+            <label for="confirmPinInput">
+                <i class="bi bi-shield-lock" aria-hidden="true"></i>
+                Confirm PIN
+            </label>
+            <input type="password" id="confirmPinInput"
+                inputmode="numeric" pattern="[0-9]*" maxlength="6"
+                autocomplete="off" placeholder="Repeat your PIN">
+        </div>
+
+        <p id="securityError" class="error-message" aria-live="polite"></p>
+
+        <button id="securitySubmit" class="primary-button full-button"
+            type="submit">
+            <i class="bi bi-unlock-fill" aria-hidden="true"></i>
+            Unlock Wallet
+        </button>
+
+    </form>
+
+    <p class="security-note">
+        <i class="bi bi-info-circle" aria-hidden="true"></i>
+        Demo protection only. Do not use your bank PIN or a sensitive
+        password here.
+    </p>
+
+</div>
+
+</div>
+
+<!-- RECEIPT MODAL -->
+
+<div id="receiptModal" class="receipt-modal hidden">
+
+<div id="receiptOverlay" class="receipt-overlay"></div>
+
+<div class="receipt-card" role="dialog" aria-modal="true"
+    aria-label="Transaction receipt">
+
+    <div class="receipt-header">
+
+        <div class="receipt-logo">
+            <i class="bi bi-wallet2" aria-hidden="true"></i>
+        </div>
+
+        <div>
+            <h2>M-Pocket</h2>
+            <p class="muted">
+                <i class="bi bi-receipt" aria-hidden="true"></i>
+                Transaction Receipt
+            </p>
+        </div>
+
+        <button id="closeReceipt" class="icon-button" type="button"
+            aria-label="Close receipt" title="Close Receipt">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+
+    </div>
+
+    <div id="receiptContent" class="receipt-content"></div>
+
+    <div class="receipt-actions">
+
+        <button id="printReceipt" class="primary-button" type="button">
+            <i class="bi bi-printer-fill" aria-hidden="true"></i>
+            Print Receipt
+        </button>
+
+        <button id="closeReceiptBottom" class="secondary-button"
+            type="button">
+            <i class="bi bi-x-circle" aria-hidden="true"></i>
+            Close
+        </button>
+
+    </div>
+</div>
+
+</div>
+
+<!-- NOTIFICATION -->
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- JAVASCRIPT -->
+
+<script src="script.js"></script>
+
+</body>
+</html>
